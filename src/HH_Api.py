@@ -9,13 +9,13 @@ class HH(HH_ApiAbstract):
 
     def __init__(self):
 
-        self.url = 'https://api.hh.ru/vacancies'
+        self.__url = 'https://api.hh.ru/vacancies'
         self.headers = {'User-Agent': 'HH-User-Agent'}
         self.vacancies = []
         
-    def get_response(self, keyword, per_page):
+    def get_response(self, keyword: str, per_page: int):
         params = {'text': keyword, 'per_page': per_page}
-        return requests.get(self.url, params=params)
+        return requests.get(self.__url, params=params)
     
-    def get_vacancies(self, keyword, per_page):
+    def get_vacancies(self, keyword: str, per_page: int):
         return self.get_response(keyword, per_page).json()['items']
