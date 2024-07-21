@@ -4,13 +4,13 @@ from src.Abstraction import Creat_Json
 class CreationJson(Creat_Json):
     """Класс для создания json файла"""
     def __init__(self, filename):
-        self.filename = f'../data/filename'
+        self.filename = f'../data/vacancies.json'
 
     def write(self, vacancies):
         with open(self.filename, 'w') as file:
             json.dump(vacancies, file)
     def get_vacancies(self):
-        with open(self.filename) as file:
+        with open(self.filename, 'r') as file:
             data = json.load(file)
         vacancies = []
         for vacancy in data:
