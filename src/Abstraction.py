@@ -9,7 +9,7 @@ class HH_ApiAbstract(ABC):
         pass
 
 
-class Creat_Json(ABC):
+class Creat_JsonAbstract(ABC):
 
     @abstractmethod
     def write(self, vacancies):
