@@ -10,12 +10,12 @@ def main():
     hh_api = HH()
     vacancies = hh_api.get_vacancies(keyword, 50)
 
-    saver = CreationJson("vacancies")
+    saver = CreationJson()
     saver.write(vacancies)
-    # sort_by_salary = get_vacancies_by_salary(vacancies, range_salary)
-    # sorted_vacancies = sorted(sort_by_salary, key=lambda x: x.get('salary').get('from'), reverse=True)
-    # top_vacancies = sorted_vacancies[:top_n]
-    # print_vacancies(Vacancies.object_list(top_vacancies))
+    sort_by_salary = get_vacancies_by_salary(vacancies, range_salary)
+    sorted_vacancies = sorted(sort_by_salary, key=lambda x: x.get('salary').get('from'), reverse=True)
+    top_vacancies = sorted_vacancies[:top_n]
+    print_vacancies(Vacancies.object_list(top_vacancies))
 
 
 if __name__ == "__main__":
