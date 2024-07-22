@@ -111,15 +111,11 @@ class Vacancies:
         """
         return (f'Название вакансии:\t\t{self.name}\n'
                 f'Ссылка на вакансию:\t\t{self.__alternate_url}\n'
-                f'Зарплата: \t\tот {self.salary}\n'
-                f'Город:\t\t{self.city}\n'
-                f'Место работы:\t\t{self.address}\n'
-                f'Метро:\t\tстанция {self.metro}\n'
-                f'Краткое описание:\t\t{self.requirement}\n\n'
+                f'Зарплата:          \t\tот {self.salary}\n'
+                f'Город:             \t\t{self.city}\n'
+                f'Место работы:      \t\t{self.address}\n'
+                f'Метро:             \t\tстанция {self.metro}\n'
+                f'Краткое описание:  \t\t{self.requirement}\n'
                 )
 
-    def __gt__(self, other):
-        """
-        Определение поведения для оператора '>'. Сравнивает вакансии по зарплате
-        """
-        return self.salary > other.salary
+
