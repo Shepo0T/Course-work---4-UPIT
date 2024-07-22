@@ -2,15 +2,18 @@ from accessify import private
 
 
 class Vacancies:
+    """
+    Класс обрабатывающий входные данные по вакансиям из API hh
+    """
     _slots_ = ('name', 'alternate_url', 'salary', 'metro', 'requirement', 'address', 'city')
 
-    name: str
-    alternate_url: str
-    salary: int
-    metro: str
-    requirement: str
-    address: str
-    city: str
+    name: str  # Название вакансии
+    alternate_url: str  # Ссылка на вакансию
+    salary: int  # Зарплата
+    metro: str  # Название станции метро
+    requirement: str  # Краткое описание вакансии
+    address: str  # Адрес места работы
+    city: str  # Название города, где находится место работы
 
     vacancies = []
 
@@ -26,28 +29,39 @@ class Vacancies:
 
     @property
     def url(self):
-        '''
-        возвращает url объекта класса Vacancy
-        '''
+        """
+        Возвращает url объекта класса Vacancy
+        """
         return self.__alternate_url
 
     @private
     def validate_params(self, params):
-        '''
-        проверяет что входные данные имеют тип dict
-        '''
+        """
+        Проверяет что входные данные имеют тип dict
+        """
         if not isinstance(params, dict):
             raise Exception('некорректные данные')
 
     @private
     def validate_metro(self, address):
-        if address is None:
+        """
+        Проверяет входные данные по наличию станции метро
+        """
+        if address == 'null':
             self.metro = 'метро не указано'
+        elif address is None:
+            self.metro = 'метро не указано'
+        elif address.get("metro") is None:
+            self.metro = 'метро не указано'
+
         else:
-            self.metro = address['metro']['station_name']
+            self.metro = address.get('metro').get('station_name')
 
     @private
     def validate_address(self, address):
+        """
+        Проверяет входные данные по адресам
+        """
         if address is None:
             self.address = 'Адрес не указан'
         else:
@@ -55,6 +69,9 @@ class Vacancies:
 
     @private
     def validate_salary(self, salary):
+        """
+        Проверяет входные данные по зарплате
+        """
         if salary is None:
             self.salary = "Зарплата не указана"
 
@@ -65,28 +82,33 @@ class Vacancies:
 
     @classmethod
     def new_vacancy(cls, params):
-        '''
-        возвращает объект класса Vacancy
-        '''
+        """
+        Возвращает объект класса Vacancy
+        """
         return cls(params)
 
     @classmethod
     def add_vacancy(cls, vacancies):
-        '''
-        добавляет новые вакансии
-        '''
+        """
+        Добавляет новые вакансии
+        """
         for vacancy in vacancies:
             cls.vacancies.append(cls.new_vacancy(vacancy))
 
     @classmethod
     def object_list(cls, vacancies):
-
+        """
+        Возвращает список инициализированных объектов класса Vacancies
+        """
         cls.vacancies = []
         for vacancy in vacancies:
             cls.vacancies.append(cls.new_vacancy(vacancy))
         return cls.vacancies
 
     def __str__(self):
+        """
+        Строковое представление объекта
+        """
         return (f'Название вакансии:\t\t{self.name}\n'
                 f'Ссылка на вакансию:\t\t{self.__alternate_url}\n'
                 f'Зарплата: \t\tот {self.salary}\n'
@@ -97,7 +119,7 @@ class Vacancies:
                 )
 
     def __gt__(self, other):
-        '''
+        """
         Определение поведения для оператора '>'. Сравнивает вакансии по зарплате
-        '''
+        """
         return self.salary > other.salary
