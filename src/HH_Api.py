@@ -15,9 +15,13 @@ class HH(HH_ApiAbstract):
         self.params = {"text":"", "per_page": ""}
 
     def get_response(self, keyword: str, per_page: int ) -> Response:
-        self.params['text'] = keyword
-        self.params['per_page'] = per_page
-        return requests.get(url=self.url, params=self.params)
+        params = {
+            'text': keyword,
+            'page': 0,
+            'per_page': per_page,
+            'only_with_salary': True
+        }
+        return requests.get(url=self.url, params=params)
 
     def get_vacancies(self, keyword: str, per_page: int):
         return self.get_response(keyword, per_page).json()['items']
